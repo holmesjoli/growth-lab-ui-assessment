@@ -16,30 +16,32 @@ function App() {
       .then(response => response.json())
       .then(data => {
 
-        let regions = data.filter((d:any) => d.parent === null);
-        let states = data.filter((d:any) => regions.map((d: any) => d.id).includes(d.parent));
-        let counties = data.filter((d:any) => states.map((d: any) => d.id).includes(d.parent));
+        let regionData: AreaData[] = [];
 
-        console.log(data)
-        console.log(regions)
-        console.log(states)
-        console.log(counties)
+        for (let r of data.filter((d: any) => d.level === "region")) {
 
-        let areaData: AreaData[] = [];
+          let stateData: AreaData[] = [];
 
-        for (let i of data.filter((d: any) => d.level === "region")) {
+          for (let s of data.filter((d: any) => d.level === "state" && d.parent == r.id)) {
 
-          let n = i.name;
+            stateData.push(
+              {'id': s.id,
+              'name': s.name,
+              'level': s.level,
+              'children': data.filter((d: any) => d.parent === s.id)}
+              )
 
-          areaData.push({'id': i.id,
-                        'name': i.name,
-                        'level': i.level,
-                        'children': data.filter((d: any) => d.parent === i.id)})
+          }
 
-
+          regionData.push(
+            {'id': r.id,
+            'name': r.name,
+            'level': r.level,
+            'children': stateData}
+            )
         }
 
-        console.log(areaData)
+        console.log(regionData)
         setData(data);
     });
 
