@@ -24,20 +24,20 @@ function App() {
 
   console.log(data)
 
-  const Card: React.FC<{ card: Area }> = ({ card }) => {
-    return <div>{card.name}</div>;
+  const OptGroup: React.FC<{ area: Area }> = ({ area }) => {
+    return <optgroup label={area.name}></optgroup>;
   };
   
-  const renderCards = () => {
-    return data.map(card => {
-      return <Card key={card.id} card={card} />;
+  const renderDropDown = () => {
+    return data.map(area => {
+      return <OptGroup key={area.id} area={area} />;
     });
   };
 
   return (
     <div className="App">
         <div>
-          {renderCards()}
+          {renderDropDown()}
         </div>
     </div>
   );
