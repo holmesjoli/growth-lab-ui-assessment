@@ -37,7 +37,10 @@ function App() {
   return (
     <div className="App">
         <div>
+        <select>
+          <option>Please select a country</option>
           {renderDropDown()}
+        </select>
         </div>
     </div>
   );
