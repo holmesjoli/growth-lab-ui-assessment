@@ -1,13 +1,13 @@
-import { Area, AreaData } from '../types';
+import { Area } from '../types';
 
 // Nests the data
 export function nestData (data: Area[]) {
 
-    let regionData: AreaData[] = [];
+    let regionData: Area[] = [];
 
     for (let r of data.filter((d: any) => d.level === "region")) {
 
-      let stateData: AreaData[] = [];
+      let stateData: Area[] = [];
 
       for (let s of data.filter((d: any) => d.level === "state" && d.parent == r.id)) {
 
@@ -15,6 +15,7 @@ export function nestData (data: Area[]) {
           {'id': s.id,
           'name': s.name,
           'level': s.level,
+          'parent': s.parent,
           'children': data.filter((d: any) => d.parent === s.id)}
           )
       }
@@ -23,6 +24,7 @@ export function nestData (data: Area[]) {
         {'id': r.id,
         'name': r.name,
         'level': r.level,
+        'parent': r.parent,
         'children': stateData}
         )
     }
