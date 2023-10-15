@@ -4,13 +4,12 @@ import { useState, useEffect } from 'react';
 import { nestData } from './components/DataManagement';
 
 import { Area } from './types';
-import { OptionGroup } from './components/DropDown';
 
 const url = "https://gist.githubusercontent.com/bleonard33/38a183289ed87082fed7b2547f2eea49/raw/3290b8ea9791c4e632520a9e1849f580bb82346a/census_classification.json"
 
 function App() {
 
-  const [data, setData] = useState<Area[]>([{'id': 0, 'name': '', 'level': '', 'parent': 0, 'children': '' }]);
+  const [data, setData] = useState<Area[]>([]);
 
   useEffect(() => {
 
@@ -22,12 +21,21 @@ function App() {
 
   }, [])
 
-  console.log(data)
+  // console.log(data)
+
+  const Opt: React.FC<{ opt: Area }> = ({ opt }) => {
+    return <option value={opt.id}>{opt.name}</option>;
+  };
 
   const OptGroup: React.FC<{ area: Area }> = ({ area }) => {
-    return <optgroup label={area.name}></optgroup>;
+    return <optgroup className="region" label={area.name}>{area.name} {
+      area.children.map((opt: any) => {
+        return <option value={opt.id}>{opt.name}</option>
+      })
+    }
+    </optgroup>;
   };
-  
+
   const renderDropDown = () => {
     return data.map(area => {
       return <OptGroup key={area.id} area={area} />;
@@ -36,7 +44,7 @@ function App() {
 
   return (
     <div className="App">
-        <div>
+        <div className="Dropdown">
         <select>
           <option>Please select a country</option>
           {renderDropDown()}
@@ -45,4 +53,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

@@ -1,0 +1,19 @@
+.Dropdown select {
+  border: 1px solid #b5b5b6;
+  background-color: white;
+  padding: 5px;
+}
+
+optgroup, opt {
+  font-weight: normal;
+  color: #747575;
+  font-size: 13;
+}
+
+optgroup:hover {
+  color: #e8f1f6;
+}
+
+.region {
+  cursor: hand;
+}
